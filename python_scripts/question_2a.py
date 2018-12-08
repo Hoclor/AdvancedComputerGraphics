@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 """
-    Question 1: Construct a parametric curve to represent a heart-shaped object. Produce both a scaled-up
-    and a scaled-down version of the object by modifying the control points of the parametric curve.
+    Question 2a: Decompose the heart-shaped object in question 1 into Bezier curves and show all control
+points for each Bezier curve.
 """
 
 import os
@@ -36,6 +36,6 @@ heart_bezier = operations.decompose_curve(heart)
 # Set evaluation delta
 heart_bezier.delta = 0.001
 
-# Draw the control point polygon and the evaluated curve
+# Draw the control point polygon and the bezier curves from the decomposition
 heart_bezier.vis = vis_comp
 heart_bezier.render()
