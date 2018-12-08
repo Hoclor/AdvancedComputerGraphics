@@ -143,24 +143,22 @@ landscape.vis = vis_comp
 # SURFACE 2 - random generation
 #
 
-def generate_mountains(x_size, y_size, x_offset, y_offset):
+def generate_mountains(x_size, y_size):
     """Generates a mountain of size x_size by y_size
 
     :param x_size: the width of the mountain
     :param y_size: the length of the mountain
-    :param x_offset: the x coordinate at which to start
-    :param y_offset: the y coordinate at which to start
     """
     # Create a x_size x y_size np array of [x,y,z] coordinates
     mountain = np.ones((x_size, y_size, 3))
-    # Set the x and y values to x_offset + 5*x_index, y_offset + 5*y_index respectively,
-    # and Set z = 10 for the outside rows/columns, and z = random value from [0, 15, 30, 45, 60, 75] for the rest
+    # Set x and y values to 0, to be set later with set_x_y()
+    # Set z = 10 for the outside rows/columns, and z = random value from [0, 15, 30, 45, 60, 75] for the rest
     for x in range(x_size):
         for y in range(y_size):
             if x == 0 or y == 0 or x == x_size-1 or y == y_size - 1:
                 z = 10
             else:
                 z = random.randrange(0, 76, 15)
-            mountain[x, y] = [x_offset + 5*x, y_offset + 5*y, z]
+            mountain[x, y] = [0, 0, z]
     # return the mountain array
     return mountain
