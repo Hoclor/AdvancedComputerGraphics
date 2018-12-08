@@ -52,6 +52,21 @@ mountain = np.array([[0, 0, 10], [0, 0, 8], [0, 0, 8], [0, 0, 10], [0, 0, 10], [
 # Set its global position - top left
 mountain = set_x_y(mountain, 0, 0)
 
+# Define the 7x7 bumpy plains section
+bumpy_plains = np.array([[0, 0, 10], [0, 0, 10], [0, 0, 10], [0, 0, 10], [0, 0, 10], [0, 0, 10], [0, 0, 10],
+                         [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 10],
+                         [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 10],
+                         [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 10],
+                         [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 10],
+                         [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 10],
+                         [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 10]]).reshape(7,7,3)
+# Create the bumpy plains by randomly adding between 0 and 24 to each control point's z value (except the outside edge - fix these to 10)
+for x in range(1, 7):
+    for y in range(0, 6):
+        bumpy_plains[x, y, 2] += random.randrange(0, 31, 10)
+# Set its global position - top right
+bumpy_plains = set_x_y(bumpy_plains, 0, 35)
+
 
 surface1.ctrlpts = [[0, 0, 6], [0, 5, 8], [00, 10, -3], [00, 15, 10], [00, 20, 4], [00, 25, -3], [00, 30, 5],
                     [5, 0, 18], [5, 5, 4], [5, 10, 0], [5, 15, 6], [5, 20, 0], [5, 25, 40], [5, 30, 0],
