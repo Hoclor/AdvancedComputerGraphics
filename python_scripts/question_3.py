@@ -31,13 +31,27 @@ def set_x_y(region, x_offset, y_offset):
 #
 
 # Create a B-Spline surface instance
-surface1 = BSpline.Surface()
+landscape = BSpline.Surface()
 
 # Set up the Bezier surface
-surface1.degree_u = 6
-surface1.degree_v = 6
-surface1.ctrlpts_size_u = 7
-surface1.ctrlpts_size_v = 7
+landscape.degree_u = 3
+landscape.degree_v = 3
+landscape.ctrlpts_size_u = 17 # x axis (visually vertical)
+landscape.ctrlpts_size_v = 14 # y axis (visually horizontal)
+
+# Use numpy arrays to define each section of the landscape to allow for easier piecewise and global processing
+
+# Define the 7x7 mountain section
+mountain = np.array([[0, 0, 10], [0, 0, 8], [0, 0, 8], [0, 0, 10], [0, 0, 10], [0, 0, 25], [0, 0, 10],
+                     [0, 0, 12], [0, 0, 24], [0, 0, 48], [0, 0, 24], [0, 0, 44], [0, 0, 65], [0, 0, 20],
+                     [0, 0, 10], [0, 0, 29], [0, 0, 65], [0, 0, 40], [0, 0, 28], [0, 0, 33], [0, 0, 24],
+                     [0, 0, 10], [0, 0, 15], [0, 0, 55], [0, 0, 31], [0, 0, 15], [0, 0, 13], [0, 0, 8],
+                     [0, 0, 10], [0, 0, 5], [0, 0, 25], [0, 0, 48], [0, 0, 38], [0, 0, 40], [0, 0, 14],
+                     [0, 0, 10], [0, 0, -3], [0, 0, -3], [0, 0, 23], [0, 0, 70], [0, 0, 80], [0, 0, 30],
+                     [0, 0, 10], [0, 0, -8], [0, 0, -4], [0, 0, 15], [0, 0, 40], [0, 0, 35], [0, 0, 20]]).reshape(7,7,3)
+# Set its global position - top left
+mountain = set_x_y(mountain, 0, 0)
+
 
 surface1.ctrlpts = [[0, 0, 6], [0, 5, 8], [00, 10, -3], [00, 15, 10], [00, 20, 4], [00, 25, -3], [00, 30, 5],
                     [5, 0, 18], [5, 5, 4], [5, 10, 0], [5, 15, 6], [5, 20, 0], [5, 25, 40], [5, 30, 0],
@@ -49,21 +63,21 @@ surface1.ctrlpts = [[0, 0, 6], [0, 5, 8], [00, 10, -3], [00, 15, 10], [00, 20, 4
 
 
 # Auto-generate knot vector
-surface1.knotvector_u = utilities.generate_knot_vector(surface1.degree_u, surface1.ctrlpts_size_u)
-surface1.knotvector_v = utilities.generate_knot_vector(surface1.degree_v, surface1.ctrlpts_size_v)
+landscape.knotvector_u = utilities.generate_knot_vector(landscape.degree_u, landscape.ctrlpts_size_u)
+landscape.knotvector_v = utilities.generate_knot_vector(landscape.degree_v, landscape.ctrlpts_size_v)
 
 # Set evaluation delta
-surface1.sample_size = 10
+landscape.delta = 0.04
 
 # Evaluate curve
-surface1.evaluate()
+landscape.evaluate()
 
 # Draw the control point polygon and the evaluated curve
 # Prepare the VisConfig
 vis_config = VisMPL.VisConfig(ctrlpts=False)
 
-vis_comp2 = VisMPL.VisSurface(vis_config)
-surface1.vis = vis_comp2
-surface1.render()
+vis_comp = VisMPL.VisSurfTriangle(vis_config)
+landscape.vis = vis_comp
+landscape.render()
 
 pass
