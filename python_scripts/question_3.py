@@ -99,6 +99,26 @@ lake = np.array([[0, 0, 5], [0, 0, 5], [0, 0, 5], [0, 0, 5], [0, 0, 5], [0, 0, 5
 # Set its global position - bottom right
 lake = set_x_y(lake, 35, 35)
 
+# Resulting layout:
+#  -> v axis
+#  mountains |   bumpy_plains
+# ------------------
+#   hill   |   lake
+
+# Join the mountains and bumpy_plains up along the v axis (horizontally)
+global_pts = np.hstack((mountain, bumpy_plains))
+# Do the same for hill and lake
+temp_pts = np.hstack((hill, lake))
+# Join these two up together vertically to create the final layout, outlined above
+global_pts = np.vstack((global_pts, temp_pts))
+# reshape global_pts to be a flat list
+global_pts = global_pts.reshape(-1, 3)
+
+# convert global_pts from numpy array to python list
+global_pts = global_pts.tolist()
+landscape.ctrlpts = global_pts
+
+
 # Auto-generate knot vector
 landscape.knotvector_u = utilities.generate_knot_vector(landscape.degree_u, landscape.ctrlpts_size_u)
 landscape.knotvector_v = utilities.generate_knot_vector(landscape.degree_v, landscape.ctrlpts_size_v)
