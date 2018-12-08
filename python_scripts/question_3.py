@@ -126,7 +126,7 @@ def display_landscape(landscape, delta=0.04):
     landscape.knotvector_v = utilities.generate_knot_vector(landscape.degree_v, landscape.ctrlpts_size_v)
 
     # Set evaluation delta
-    landscape.delta = 0.04
+    landscape.delta = delta
 
     # Evaluate curve
     landscape.evaluate()
