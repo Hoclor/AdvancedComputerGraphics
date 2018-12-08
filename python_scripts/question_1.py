@@ -11,12 +11,8 @@ from geomdl import BSpline
 from geomdl import utilities
 from geomdl.visualization import VisMPL
 
-
-# Fix file path
-# os.chdir(os.path.dirname(os.path.realpath(__file__)))
-
 #
-# 2D CURVE 1
+# Initial Heart
 #
 
 # Create a B-Spline curve
@@ -25,7 +21,6 @@ heart = BSpline.Curve()
 # Set up the control points
 heart.degree = 3
 heart.ctrlpts = [[0, -20], [25, 5], [17, 20], [5, 19], [0.2, 13], [0, 8], [-0.2, 13], [-5, 19], [-17, 20], [-25, 5], [0, -20]]
-
 
 # Auto-generate knot vector
 heart.knotvector = utilities.generate_knot_vector(heart.degree, len(heart.ctrlpts))
