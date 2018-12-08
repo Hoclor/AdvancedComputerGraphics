@@ -42,8 +42,10 @@ heart.render()
 #
 # Scaled up Heart
 #
+
 heart_upscaled = BSpline.Curve()
 scale = 2 # Any 1.0 < scale should work
+
 # Set up the control points
 heart_upscaled.degree = 3
 heart_upscaled.ctrlpts = heart.ctrlpts[:]
@@ -69,7 +71,6 @@ heart_upscaled.render()
 
 heart_downscaled = BSpline.Curve()
 scale = 0.5 # Any 0 < scale < 1.0 should work (barring floating point inaccuracies) for downscaling
-
 
 # Set up the control points
 heart_downscaled.degree = 3
