@@ -14,10 +14,6 @@ from geomdl import utilities
 from geomdl.visualization import VisMPL
 from matplotlib import cm
 
-# Set up the visualisation settings
-vis_config = VisMPL.VisConfig(ctrlpts=False) # Set ctrlpts=True to plot control points with the curves
-vis_comp = VisMPL.VisCurve2D(vis_config)
-
 def set_x_y(region, x_offset, y_offset):
     """Sets the x and y values of the given region"""
     for x in range(region.shape[0]):
@@ -64,11 +60,6 @@ def generate_landscape():
                             [0, 0, 20], [0, 0, 40], [0, 0, 20], [0, 0, 10], [0, 0, 40], [0, 0, 40], [0, 0, 10]]).reshape(7,7,3)
     # Set its global position - top right
     bumpy_plains = set_x_y(bumpy_plains, 0, 35)
-
-
-
-
-            
 
     # Define the 10x7 hill section
     hill = np.array([[0, 0, 10], [0, 0, -8], [0, 0, 0], [0, 0, 8], [0, 0, 10], [0, 0, 10], [0, 0, 10],
@@ -138,31 +129,6 @@ def display_landscape(landscape, delta=0.04):
     vis_comp = VisMPL.VisSurfTriangle(vis_config)
     landscape.vis = vis_comp
     landscape.render(colormap=cm.get_cmap(name='terrain')) # Apply a colormap to the render
-
-#
-# SURFACE 2 - random generation
-#
-
-def generate_mountains(x_size, y_size):
-    """Generates a mountain of size x_size by y_size
-
-    :param x_size: the width of the mountain
-    :param y_size: the length of the mountain
-    """
-    # Create a x_size x y_size np array of [x,y,z] coordinates
-    mountain = np.ones((x_size, y_size, 3))
-    # Set x and y values to 0, to be set later with set_x_y()
-    # Set z = 10 for the outside rows/columns, and z = random value from [0, 15, 30, 45, 60, 75] for the rest
-    for x in range(x_size):
-        for y in range(y_size):
-            if x == 0 or y == 0 or x == x_size-1 or y == y_size - 1:
-                z = 10
-            else:
-                z = random.randrange(0, 76, 15)
-            mountain[x, y] = [0, 0, z]
-    # return the mountain array
-    return mountain
-
 
 if __name__ == "__main__":
     # Generate the landscape
