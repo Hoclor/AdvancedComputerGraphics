@@ -39,3 +39,11 @@ heart_bezier.delta = 0.001
 # Draw the control point polygon and the bezier curves from the decomposition
 heart_bezier.vis = vis_comp
 heart_bezier.render()
+
+"""
+Question 2b: Describe any extra geometrical property is required to maintain for supporting proper shape
+editing of the heart-shaped object through the decomposed Bezier curves. Show how such
+property is applied.
+
+This question is answered in the question_2b.pdf file.
+"""
