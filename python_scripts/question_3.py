@@ -12,6 +12,7 @@ import random
 from geomdl import BSpline
 from geomdl import utilities
 from geomdl.visualization import VisMPL
+from matplotlib import cm
 
 # Set up the visualisation settings
 vis_config = VisMPL.VisConfig(ctrlpts=False) # Set ctrlpts=True to plot control points with the curves
@@ -119,6 +120,7 @@ landscape.ctrlpts = global_pts
     # Return the landscape
     return landscape
 
+def display_landscape(landscape, delta=0.04):
 # Auto-generate knot vector
 landscape.knotvector_u = utilities.generate_knot_vector(landscape.degree_u, landscape.ctrlpts_size_u)
 landscape.knotvector_v = utilities.generate_knot_vector(landscape.degree_v, landscape.ctrlpts_size_v)
@@ -135,7 +137,7 @@ vis_config = VisMPL.VisConfig(ctrlpts=False)
 
 vis_comp = VisMPL.VisSurfTriangle(vis_config)
 landscape.vis = vis_comp
-landscape.render()
+    landscape.render(colormap=cm.get_cmap(name='terrain')) # Apply a colormap to the render
 
 #
 # SURFACE 2 - random generation
