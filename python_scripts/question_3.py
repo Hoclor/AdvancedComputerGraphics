@@ -7,6 +7,8 @@
 """
 
 import os
+import numpy as np
+import random
 from geomdl import BSpline
 from geomdl import utilities
 from geomdl.visualization import VisMPL
@@ -14,6 +16,15 @@ from geomdl.visualization import VisMPL
 # Set up the visualisation settings
 vis_config = VisMPL.VisConfig(ctrlpts=False) # Set ctrlpts=True to plot control points with the curves
 vis_comp = VisMPL.VisCurve2D(vis_config)
+
+def set_x_y(region, x_offset, y_offset):
+    """Sets the x and y values of the given region"""
+    for x in range(region.shape[0]):
+        for y in range(region.shape[1]):
+            region[x, y, 0] = x_offset + 5*x
+            region[x, y, 1] = y_offset + 5*y
+    
+    return region
 
 #
 # SURFACE 1
