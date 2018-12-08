@@ -13,7 +13,7 @@ if __name__ == "__main__":
     landscape = generate_landscape()
     print("Question 4: generating the landscape from Question 3 with varying levels of detail.")
     # Plot it at the 3 levels of detail first
-    
+
     # LOW quality
     display_landscape(landscape, 0.02)
 
@@ -48,7 +48,6 @@ Input: ").lower()
             except ValueError:
                 print(e)
                 continue
-            print("test")
             display_landscape(landscape, delta)
         elif UserInput == 'sample_size':
             try:
