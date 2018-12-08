@@ -3,7 +3,7 @@
 
 """
     Question 2a: Decompose the heart-shaped object in question 1 into Bezier curves and show all control
-points for each Bezier curve.
+    points for each Bezier curve.
 """
 
 import os
@@ -41,9 +41,8 @@ heart_bezier.vis = vis_comp
 heart_bezier.render()
 
 """
-Question 2b: Describe any extra geometrical property is required to maintain for supporting proper shape
-editing of the heart-shaped object through the decomposed Bezier curves. Show how such
-property is applied.
+    Question 2b: Describe any extra geometrical property is required to maintain for supporting proper shape
+    editing of the heart-shaped object through the decomposed Bezier curves. Show how such property is applied.
 
-This question is answered in the question_2b.pdf file.
+    This question is answered in the question_2b.pdf file.
 """

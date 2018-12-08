@@ -2,10 +2,8 @@
 # -*- coding: utf-8 -*-
 
 """
-    Examples for the NURBS-Python Package
-    Released under MIT License
-    Developed by Onur Rauf Bingol (c) 2018
-    2nd degree and 3rd degree 2-dimensional Bezier curves
+    Question 3: Construct a landscape using a parametric surface. The landscape should contain features such
+    as mountains, hills, plains, etc.
 """
 
 import os
