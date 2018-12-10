@@ -12,13 +12,13 @@ from geomdl import utilities
 from geomdl.visualization import VisMPL
 
 # Set up the visualisation settings
-vis_config = VisMPL.VisConfig(ctrlpts=False) # Set ctrlpts=True to plot control points with the curves
+vis_config = VisMPL.VisConfig(legend=False, ctrlpts=False) # Set ctrlpts=True to plot control points with the curves
 vis_comp = VisMPL.VisCurve2D(vis_config)
 
 #
 # Initial Heart
 #
-def generate_heart():
+def generate_heart(scale=1):
     # Create a B-Spline curve
     heart = BSpline.Curve()
 
@@ -26,27 +26,26 @@ def generate_heart():
     heart.degree = 3
     heart.ctrlpts = [[0, -20], [25, 5], [17, 20], [5, 19], [0.2, 13], [0, 8], [-0.2, 13], [-5, 19], [-17, 20], [-25, 5], [0, -20]]
 
+
+    # Scale the heart up/down according to the input scale
+    heart.ctrlpts = [[scale*x, scale*y] for x,y in heart.ctrlpts]
+
     # Auto-generate knot vector
     heart.knotvector = utilities.generate_knot_vector(heart.degree, len(heart.ctrlpts))
+
+    # Set the evaluation delta
+    heart.delta = 0.001
+
+    # Evaluate the curve
+    heart.evaluate()
 
     # Return the heart
     return heart
 
-def display_heart(heart, scale=1):
-    # Scale the heart up/down according to the input scale
-    heart.ctrlpts = [[scale*x, scale*y] for x,y in heart.ctrlpts]
-
-    # Set evaluation delta
-    heart.delta = 0.001
-
-    # Evaluate curve
-    heart.evaluate()
-
+def display_heart(heart):
     # Draw the control point polygon and the evaluated curve
     heart.vis = vis_comp
     heart.render()
-    # Downscale the heart again to make sure the control points are not permanently altered
-    heart.ctrlpts = [[x/scale, y/scale] for x,y in heart.ctrlpts]
 
 if __name__ == "__main__":
     # Create the heart
