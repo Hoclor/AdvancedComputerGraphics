@@ -11,30 +11,27 @@ from geomdl import BSpline
 from geomdl import utilities
 from geomdl import operations
 from geomdl.visualization import VisMPL
+from question_1 import generate_heart
 
 # Set up the visualisation settings
 vis_config = VisMPL.VisConfig(legend=False, ctrlpts=True) # Set ctrlpts=True to plot control points with the curves
 vis_comp = VisMPL.VisCurve2D(vis_config)
 
 #
-# Create the B-Spline heart
+# Create the decomposed heart
 #
 
-# Create a B-Spline curve
-heart = BSpline.Curve()
-
-# Set up the control points
-heart.degree = 3
-heart.ctrlpts = [[0, -20], [25, 5], [17, 20], [5, 19], [0.2, 13], [0, 8], [-0.2, 13], [-5, 19], [-17, 20], [-25, 5], [0, -20]]
-
-# Auto-generate knot vector
-heart.knotvector = utilities.generate_knot_vector(heart.degree, len(heart.ctrlpts))
+# Generate the heart
+heart = generate_heart()
 
 # Decompose the B-Spline into Bezier curves
 heart_bezier = operations.decompose_curve(heart)
 
 # Set evaluation delta
 heart_bezier.delta = 0.001
+
+# Print output information
+print("Displaying the decomposed heart. Note that each set of control points for each Bezier curve is given a different colour, but that colour does not necessarily match up with the relevant Bezier curve. Each different coloured segment represents a different Bezier curve.")
 
 # Draw the control point polygon and the bezier curves from the decomposition
 heart_bezier.vis = vis_comp

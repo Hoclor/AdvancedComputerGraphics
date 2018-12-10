@@ -128,6 +128,7 @@ def display_landscape(landscape, delta=0.04):
 
     vis_comp = VisMPL.VisSurfTriangle(vis_config)
     landscape.vis = vis_comp
+    print("Displaying the landscape. This consists of a large mountainous area with several peaks, a small hill, a river which runs between the hill and the mountains, and a lake which the river feeds into.")
     landscape.render(colormap=cm.get_cmap(name='terrain')) # Apply a colormap to the render
 
 if __name__ == "__main__":

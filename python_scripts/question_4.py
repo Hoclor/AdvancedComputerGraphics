@@ -8,20 +8,30 @@ generate levels of details is expected to preserve important features of the lan
 
 from question_3 import *
 
-if __name__ == "__main__":
-    # Generate the landscape
+def default():
+    # Plot the landscape at the 3 levels of detail first
     landscape = generate_landscape()
-    print("Question 4: generating the landscape from Question 3 with varying levels of detail.")
-    # Plot it at the 3 levels of detail first
 
     # LOW quality
-    display_landscape(landscape, 0.02)
+    print('Displaying LOW quality landscape')
+    display_landscape(landscape, 0.08)
 
     # MEDIUM quality
+    print('Displaying MEDIUM quality landscape')
     display_landscape(landscape, 0.04)
 
     # HIGH quality
-    display_landscape(landscape, 0.08)
+    print('Displaying HIGH quality landscape')
+    display_landscape(landscape, 0.02)
+
+
+if __name__ == "__main__":
+    # Generate the landscape
+    print("Question 4: generating the landscape from Question 3 with varying levels of detail.")
+    default()
+
+    landscape = generate_landscape()
+
     while True:
         UserInput = input("To plot again with the default values (delta = [0.02, 0.04, 0.08]), type: 'default'.\n\
 To plot with your own values, simply type 'delta' or 'sample_size', then at the next prompt type in your desired value.\n\
@@ -32,26 +42,21 @@ Input: ").lower()
             print('Quitting Question 4 program.')
             break
         elif UserInput == 'default':
-            # Display the landscape at 3 levels of detail
-
-            # LOW quality
-            display_landscape(landscape, 0.02)
-
-            # MEDIUM quality
-            display_landscape(landscape, 0.04)
-
-            # HIGH quality
-            display_landscape(landscape, 0.08)
+            # Run the default function
+            default()
         elif UserInput == 'delta':
             try:
-                delta = float(input("Delta value: "))
+                UserInput2 = input("Delta value: ")
+                delta = float(UserInput2)
             except ValueError:
-                print(e)
+                print('Unexpected input: {}'.format(UserInput2))
                 continue
             display_landscape(landscape, delta)
         elif UserInput == 'sample_size':
             try:
-                delta = 1/float(input("Sample size: "))
+                UserInput2 = input("Sample size: ")
+                delta = 1/float(UserInput2)
             except ValueError:
+                print('Unexpected input: {}'.format(UserInput2))
                 continue
             display_landscape(landscape, delta)
