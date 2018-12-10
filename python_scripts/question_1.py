@@ -103,15 +103,16 @@ Input: ").lower()
                     try:
                         scale = float(UserInput)
                     except ValueError as e:
-                        print('Unexpected input: {}'.format(UserInput))
+                        print('Unexpected input: {}. To quit, type \'quit\'. To plot your hearts, type \'done\'.'.format(UserInput))
                         continue
                     heart = generate_heart(scale)
                     multi_heart.add(heart)
             if user_quits:
                 # User wants to quit the program
                 break
-            # If user did not type quit, plot the hearts
-            display_curve(multi_heart)
+            # If user did not type quit, and he gave > 0 scales, plot the hearts
+            if len(multi_heart.evalpts) > 0:
+                display_curve(multi_heart)
         elif UserInput == 'multi_no_points':
             # Create the multi curve
             multi_heart = Multi.MultiCurve()
@@ -132,15 +133,16 @@ Input: ").lower()
                     try:
                         scale = float(UserInput)
                     except ValueError as e:
-                        print('Unexpected input: {}'.format(UserInput))
+                        print('Unexpected input: {}. To quit, type \'quit\'. To plot your hearts, type \'done\'.'.format(UserInput))
                         continue
                     heart = generate_heart(scale)
                     multi_heart.add(heart)
             if user_quits:
                 # User wants to quit the program
                 break
-            # If user did not type quit, plot the hearts
-            display_curve(multi_heart, ctrlpts=False)
+            # If user did not type quit, and he gave > 0 scales, plot the hearts
+            if len(multi_heart.evalpts) > 0:
+                display_curve(multi_heart, ctrlpts=False)
         else:
             try:
                 scale = float(UserInput)
