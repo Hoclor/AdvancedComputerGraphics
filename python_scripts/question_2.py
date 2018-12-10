@@ -13,7 +13,7 @@ from geomdl import operations
 from geomdl.visualization import VisMPL
 
 # Set up the visualisation settings
-vis_config = VisMPL.VisConfig(ctrlpts=True) # Set ctrlpts=True to plot control points with the curves
+vis_config = VisMPL.VisConfig(legend=False, ctrlpts=True) # Set ctrlpts=True to plot control points with the curves
 vis_comp = VisMPL.VisCurve2D(vis_config)
 
 #
