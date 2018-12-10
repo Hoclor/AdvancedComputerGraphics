@@ -13,8 +13,6 @@ from geomdl import utilities
 from geomdl.visualization import VisMPL
 
 # Set up the visualisation settings
-vis_config = VisMPL.VisConfig(legend=False, ctrlpts=False) # Set ctrlpts=True to plot control points with the curves
-vis_comp = VisMPL.VisCurve2D(vis_config)
 
 #
 # Initial Heart
@@ -43,10 +41,13 @@ def generate_heart(scale=1):
     # Return the heart
     return heart
 
-def display_heart(heart):
+def display_curve(curve, ctrlpts=True):
+    # Generate the visualisation configuration
+    vis_config = VisMPL.VisConfig(legend=False, ctrlpts=ctrlpts)
+    vis_comp = VisMPL.VisCurve2D(vis_config)
     # Draw the control point polygon and the evaluated curve
-    heart.vis = vis_comp
-    heart.render()
+    curve.vis = vis_comp
+    curve.render()
 
 def default():
     # Create the heart
@@ -61,8 +62,7 @@ def default():
     three_hearts = Multi.MultiCurve()
     three_hearts.delta = 0.001
     three_hearts.add([heart_1, heart_2, heart_3])
-    three_hearts.vis = vis_comp
-    three_hearts.render()
+    display_curve(three_hearts)
 
 if __name__ == "__main__":
     # First display the heart at three scales
@@ -72,7 +72,8 @@ if __name__ == "__main__":
         print()
         UserInput = input("To display again with the default values (scale = [0.5, 1, 2]), type: 'default'.\n\
 To display with your own scale, simply type your desired scale (> 0).\n\
-To display several scales in one plot, type 'multi', followed by your desired scales (one per line), followed by 'done'\n\
+To display several scales in one plot, with control points, type 'multi_points', followed by your desired scales (one per line), followed by 'done'\n\
+To display several scales in one plot, without control points, type 'multi_no_points', then proceed as above\n\
 To quit this program, type 'quit'\n\
 Input: ").lower()
 
@@ -82,11 +83,10 @@ Input: ").lower()
         elif UserInput == 'default':
             # Display the heart at three scales
             default()
-        elif UserInput == 'multi':
+        elif UserInput == 'multi_points':
             # Create the multi curve
             multi_heart = Multi.MultiCurve()
             multi_heart.delta = 0.001
-            multi_heart.vis = vis_comp
             # Enter a while loop to capture each input scale
             user_quits = False
             while(True):
@@ -111,7 +111,36 @@ Input: ").lower()
                 # User wants to quit the program
                 break
             # If user did not type quit, plot the hearts
-            multi_heart.render()
+            display_curve(multi_heart)
+        elif UserInput == 'multi_no_points':
+            # Create the multi curve
+            multi_heart = Multi.MultiCurve()
+            multi_heart.delta = 0.001
+            # Enter a while loop to capture each input scale
+            user_quits = False
+            while(True):
+                UserInput = input("Next scale value: ").lower()
+                if UserInput == 'done':
+                    # Leave the loop with user_quits = False
+                    break
+                elif UserInput == 'quit' or UserInput == 'q' or UserInput == 'exit':
+                    print('Quitting Question 1 program.')
+                    user_quits = True
+                    break
+                else:
+                    # Expect a scale value input
+                    try:
+                        scale = float(UserInput)
+                    except ValueError as e:
+                        print('Unexpected input: {}'.format(UserInput))
+                        continue
+                    heart = generate_heart(scale)
+                    multi_heart.add(heart)
+            if user_quits:
+                # User wants to quit the program
+                break
+            # If user did not type quit, plot the hearts
+            display_curve(multi_heart, ctrlpts=False)
         else:
             try:
                 scale = float(UserInput)
@@ -123,4 +152,4 @@ Input: ").lower()
                 continue
             # All checks passed, so generate and display the heart
             heart = generate_heart(scale)
-            display_heart(heart)
+            display_curve(heart)
