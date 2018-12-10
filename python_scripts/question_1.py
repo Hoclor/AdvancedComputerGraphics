@@ -7,6 +7,7 @@
 """
 
 import os
+from geomdl import Multi
 from geomdl import BSpline
 from geomdl import utilities
 from geomdl.visualization import VisMPL
@@ -47,45 +48,79 @@ def display_heart(heart):
     heart.vis = vis_comp
     heart.render()
 
-if __name__ == "__main__":
+def default():
     # Create the heart
     heart = generate_heart()
     
     print("Question 1: generating and displaying a heart at different scales.")
     # Display the heart at three scales
-    
-    # ORIGINAL size
-    display_heart(heart, 1)
+    heart_1 = generate_heart(0.5)
+    heart_2 = generate_heart(1)
+    heart_3 = generate_heart(2)
 
-    # scaled UP
-    display_heart(heart, 2)
+    three_hearts = Multi.MultiCurve()
+    three_hearts.delta = 0.001
+    three_hearts.add([heart_1, heart_2, heart_3])
+    three_hearts.vis = vis_comp
+    three_hearts.render()
 
-    # scaled DOWN
-    display_heart(heart, 0.5)
+if __name__ == "__main__":
+    # First display the heart at three scales
+    default()
+
     while True:
-        UserInput = input("To display again with the default values (scale = [1, 2, 0.5]), type: 'default'.\n\
-To display with your own scale, simply type 'scale', then at the next prompt type in your desired value.\n\
+        print()
+        UserInput = input("To display again with the default values (scale = [0.5, 1, 2]), type: 'default'.\n\
+To display with your own scale, simply type your desired scale (> 0).\n\
+To display several scales in one plot, type 'multi', followed by your desired scales (one per line), followed by 'done'\n\
 To quit this program, type 'quit'\n\
 Input: ").lower()
 
         if UserInput == 'quit' or UserInput == 'q' or UserInput == 'exit':
-            print('Quitting Question 4 program.')
+            print('Quitting Question 1 program.')
             break
         elif UserInput == 'default':
             # Display the heart at three scales
-
-            # LOW quality
-            display_heart(heart, 1)
-
-            # MEDIUM quality
-            display_heart(heart, 2)
-
-            # HIGH quality
-            display_heart(heart, 0.5)
-        elif UserInput == 'scale':
+            default()
+        elif UserInput == 'multi':
+            # Create the multi curve
+            multi_heart = Multi.MultiCurve()
+            multi_heart.delta = 0.001
+            multi_heart.vis = vis_comp
+            # Enter a while loop to capture each input scale
+            user_quits = False
+            while(True):
+                UserInput = input("Next scale value: ").lower()
+                if UserInput == 'done':
+                    # Leave the loop with user_quits = False
+                    break
+                elif UserInput == 'quit' or UserInput == 'q' or UserInput == 'exit':
+                    print('Quitting Question 1 program.')
+                    user_quits = True
+                    break
+                else:
+                    # Expect a scale value input
+                    try:
+                        scale = float(UserInput)
+                    except ValueError as e:
+                        print('Unexpected input: {}'.format(UserInput))
+                        continue
+                    heart = generate_heart(scale)
+                    multi_heart.add(heart)
+            if user_quits:
+                # User wants to quit the program
+                break
+            # If user did not type quit, plot the hearts
+            multi_heart.render()
+        else:
             try:
-                scale = float(input("Scale value: "))
-            except ValueError:
-                print(e)
+                scale = float(UserInput)
+            except ValueError as e:
+                print('Unexpected input: {}'.format(UserInput))
                 continue
-            display_heart(heart, scale)
+            if scale <= 0:
+                print("Illegal scale: {}".format(scale))
+                continue
+            # All checks passed, so generate and display the heart
+            heart = generate_heart(scale)
+            display_heart(heart)
