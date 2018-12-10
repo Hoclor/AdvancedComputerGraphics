@@ -50,7 +50,7 @@ def default():
     # Create the heart
     heart = generate_heart()
     
-    print("Question 1: generating and displaying a heart at different scales.")
+    print("Question 1: generating and displaying a heart at scales of [0.5, 1, 2].")
     # Display the heart at three scales
     heart_1 = generate_heart(0.5)
     heart_2 = generate_heart(1)
@@ -103,7 +103,7 @@ Input: ").lower()
                     # Expect a scale value input
                     try:
                         scale = float(UserInput)
-                    except ValueError as e:
+                    except ValueError:
                         print('Unexpected input: {}. To quit, type \'quit\'. To plot your hearts, type \'done\'.'.format(UserInput))
                         continue
                     heart = generate_heart(scale)
@@ -134,7 +134,7 @@ Input: ").lower()
                     # Expect a scale value input
                     try:
                         scale = float(UserInput)
-                    except ValueError as e:
+                    except ValueError:
                         print('Unexpected input: {}. To quit, type \'quit\'. To plot your hearts, type \'done\'.'.format(UserInput))
                         continue
                     heart = generate_heart(scale)
@@ -149,7 +149,7 @@ Input: ").lower()
             # Take a single scale and plot the heart with that scale on its own
             try:
                 scale = float(UserInput)
-            except ValueError as e:
+            except ValueError:
                 print('Unexpected input: {}'.format(UserInput))
                 continue
             if scale <= 0:
