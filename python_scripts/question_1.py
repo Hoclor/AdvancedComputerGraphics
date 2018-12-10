@@ -6,17 +6,12 @@
     and a scaled-down version of the object by modifying the control points of the parametric curve.
 """
 
-import os
-from geomdl import Multi
 from geomdl import BSpline
 from geomdl import utilities
+from geomdl import Multi
 from geomdl.visualization import VisMPL
 
-# Set up the visualisation settings
-
-#
-# Initial Heart
-#
+# Heart creation function
 def generate_heart(scale=1):
     # Create a B-Spline curve
     heart = BSpline.Curve()
@@ -38,9 +33,10 @@ def generate_heart(scale=1):
     # Evaluate the curve
     heart.evaluate()
 
-    # Return the heart
+    # Return the heart curve
     return heart
 
+# Heart/multi-curve display function
 def display_curve(curve, ctrlpts=True):
     # Generate the visualisation configuration
     vis_config = VisMPL.VisConfig(legend=False, ctrlpts=ctrlpts)
@@ -49,6 +45,7 @@ def display_curve(curve, ctrlpts=True):
     curve.vis = vis_comp
     curve.render()
 
+# Display the heart at three scales on the same plot
 def default():
     # Create the heart
     heart = generate_heart()
@@ -59,9 +56,11 @@ def default():
     heart_2 = generate_heart(1)
     heart_3 = generate_heart(2)
 
+    # Set up a MultiCurve to allow displaying all three hearts on one plot
     three_hearts = Multi.MultiCurve()
     three_hearts.delta = 0.001
     three_hearts.add([heart_1, heart_2, heart_3])
+    # Display the MultiCurve
     display_curve(three_hearts)
 
 if __name__ == "__main__":
@@ -78,12 +77,14 @@ To quit this program, type 'quit'\n\
 Input: ").lower()
 
         if UserInput == 'quit' or UserInput == 'q' or UserInput == 'exit':
+            # Exit the program
             print('Quitting Question 1 program.')
             break
         elif UserInput == 'default':
             # Display the heart at three scales
             default()
         elif UserInput == 'multi_points':
+            # Display multiple scales on one plot, with control points showing
             # Create the multi curve
             multi_heart = Multi.MultiCurve()
             multi_heart.delta = 0.001
@@ -114,6 +115,7 @@ Input: ").lower()
             if len(multi_heart.evalpts) > 0:
                 display_curve(multi_heart)
         elif UserInput == 'multi_no_points':
+            # Display multiple scales on one plot, without control points showing
             # Create the multi curve
             multi_heart = Multi.MultiCurve()
             multi_heart.delta = 0.001
@@ -144,6 +146,7 @@ Input: ").lower()
             if len(multi_heart.evalpts) > 0:
                 display_curve(multi_heart, ctrlpts=False)
         else:
+            # Take a single scale and plot the heart with that scale on its own
             try:
                 scale = float(UserInput)
             except ValueError as e:
