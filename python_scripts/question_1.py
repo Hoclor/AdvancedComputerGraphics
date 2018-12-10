@@ -39,7 +39,7 @@ def generate_heart(scale=1):
 # Heart/multi-curve display function
 def display_curve(curve, ctrlpts=True):
     # Generate the visualisation configuration
-    vis_config = VisMPL.VisConfig(legend=False, ctrlpts=ctrlpts)
+    vis_config = VisMPL.VisConfig(legend=True, ctrlpts=ctrlpts)
     vis_comp = VisMPL.VisCurve2D(vis_config)
     # Draw the control point polygon and the evaluated curve
     curve.vis = vis_comp
@@ -53,8 +53,11 @@ def default():
     print("Question 1: generating and displaying a heart at scales of [0.5, 1, 2].")
     # Display the heart at three scales
     heart_1 = generate_heart(0.5)
+    heart_1.name = 'Scale: 0.5'
     heart_2 = generate_heart(1)
+    heart_2.name = 'Scale: 1'
     heart_3 = generate_heart(2)
+    heart_3.name = 'Scale: 2'
 
     # Set up a MultiCurve to allow displaying all three hearts on one plot
     three_hearts = Multi.MultiCurve()
@@ -71,7 +74,7 @@ if __name__ == "__main__":
         print()
         UserInput = input("To display again with the default values (scale = [0.5, 1, 2]), type: 'default'.\n\
 To display with your own scale, simply type your desired scale (> 0).\n\
-To display several scales in one plot, with control points, type 'multi_points', followed by your desired scales (one per line), followed by 'done'\n\
+To display several scales in one plot, with control points, type 'multi_points', followed by your desired scales (one per line), followed by 'plot'\n\
 To display several scales in one plot, without control points, type 'multi_no_points', then proceed as above\n\
 To quit this program, type 'quit'\n\
 Input: ").lower()
@@ -92,7 +95,7 @@ Input: ").lower()
             user_quits = False
             while(True):
                 UserInput = input("Next scale value: ").lower()
-                if UserInput == 'done':
+                if UserInput == 'plot':
                     # Leave the loop with user_quits = False
                     break
                 elif UserInput == 'quit' or UserInput == 'q' or UserInput == 'exit':
@@ -104,9 +107,11 @@ Input: ").lower()
                     try:
                         scale = float(UserInput)
                     except ValueError:
-                        print('Unexpected input: {}. To quit, type \'quit\'. To plot your hearts, type \'done\'.'.format(UserInput))
+                        print('Unexpected input: {}. To quit, type \'quit\'. To plot your hearts, type \'plot\'.'.format(UserInput))
                         continue
                     heart = generate_heart(scale)
+                    # Set the heart's name
+                    heart.name = 'Scale: {}'.format(scale)
                     multi_heart.add(heart)
             if user_quits:
                 # User wants to quit the program
@@ -123,7 +128,7 @@ Input: ").lower()
             user_quits = False
             while(True):
                 UserInput = input("Next scale value: ").lower()
-                if UserInput == 'done':
+                if UserInput == 'plot':
                     # Leave the loop with user_quits = False
                     break
                 elif UserInput == 'quit' or UserInput == 'q' or UserInput == 'exit':
@@ -135,9 +140,11 @@ Input: ").lower()
                     try:
                         scale = float(UserInput)
                     except ValueError:
-                        print('Unexpected input: {}. To quit, type \'quit\'. To plot your hearts, type \'done\'.'.format(UserInput))
+                        print('Unexpected input: {}. To quit, type \'quit\'. To plot your hearts, type \'plot\'.'.format(UserInput))
                         continue
                     heart = generate_heart(scale)
+                    # Set the heart's name
+                    heart.name = 'Scale: {}'.format(scale)
                     multi_heart.add(heart)
             if user_quits:
                 # User wants to quit the program
