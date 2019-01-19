@@ -1,0 +1,47 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage[UKenglish]{babel}
+\usepackage[UKenglish]{isodate} 
+\usepackage[margin=2cm, a4paper]{geometry}
+\usepackage{graphicx, fancyhdr}
+\usepackage{fontspec, xltxtra, xunicode}
+\usepackage{enumitem, tabu}
+
+\setlist{noitemsep}
+
+\usepackage{array, xcolor}
+\definecolor{lightgray}{gray}{0.8}
+\newcolumntype{L}{>{\raggedleft}p{0.16\textwidth}}
+\newcolumntype{R}{p{0.8\textwidth}}
+\newcommand\VRule{\color{lightgray}\vrule width 0.5pt}
+
+\pagestyle{fancy}
+\lhead{} % nothing
+\chead{pbqk24}
+\rhead{} % nothing
+\lfoot{} % nothing
+\cfoot{\thepage}
+\rfoot{} % nothing
+
+\title{\vspace{-6.0ex}Advanced Computer Graphics Assignment}
+\author{pbqk24}
+\date{10 December 2018}
+
+\begin{document}
+\maketitle
+
+\section*{Execution Instructions}
+To execute the set of Python scripts, make sure they are all placed in the same directory (as Questions 2 and 4 re-use the code from Questions 1 and 3, respectively). The scripts were written and tested with Python 3.7.1, but any version should work. The scripts also require that the geomdl, numpy, and matplotlib libraries be available.\\
+
+The scripts for Questions 1 and 4 display the requested output, then launch into an interactive script that allows you to customize the displayed output. Questions 2 and 3 simply display the output and then exit. Most scripts also output some text regarding the output and/or how to interact with the script.
+
+\section*{Question 2b}
+
+In order to support proper shape editing of the heart-shaped object through the decomposed Bezier curves, as performed for Question 2a, the continuity between the Bezier curve segments must be maintained. This ensures that the produced curve/object visually looks good, and that there are no cracks, sudden extreme angles, or gaps (that are not intended). The property is applied by maintaining $C^n$ continuity, for some $n$. This means that the direction and magnitude of the derivative of the curve equations at the point where they join are equal through the $n\textsuperscript{th}$ derivative.\\
+
+As $C^n$ continuity is computationally expensive to maintain, instead $G^1$ continuity is maintained in practice. This is applied by ensuring that the directions of the two segments' tangent vectors are equal at the point that they join up (differing from $C^1$ continuity by not placing a requirement on the magnitude of the tangent vectors). This is done as it achieves acceptable continuity, while being much less expensive to compute and maintain.
+
+
+\end{document}
